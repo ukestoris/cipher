@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AbstractControlComponent } from '../abstract/abstract-control';
 import { cvaProvider } from '../../utils/cva-provider';
@@ -9,5 +9,6 @@ import { cvaProvider } from '../../utils/cva-provider';
   templateUrl: './textarea.html',
   styleUrl: './textarea.css',
   providers: [cvaProvider(Textarea)],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Textarea extends AbstractControlComponent {}

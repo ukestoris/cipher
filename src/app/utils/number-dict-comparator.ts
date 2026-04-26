@@ -1,0 +1,1 @@
+export const numberDictEntryComparator: (a: [string, number], b: [string, number]) => number = ([,a], [,b]) => b - a;

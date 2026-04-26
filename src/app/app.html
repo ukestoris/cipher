@@ -1,3 +1,19 @@
 <main class="main">
-  <app-textarea id="cipherText" label="Cipher text" [formControl]="cipherText"></app-textarea>
+  <app-textarea id="cipherText" label="Cipher text" [formControl]="cipherText" />
+  <h2>Letter frequencies in cipher</h2>
+  <div class="flex gap-2">
+    @if (letters().length) {
+      @for (letter of letters(); track letter) {
+        <app-frequency-display [letter]="letter" [count]="counts()[letter]" [frequency]="frequencies()[letter]"/>
+      }
+    } @else {
+      Paste the cipher text into textarea above to display letter frequencies
+    }
+  </div>
+  <h2>Letter frequencies in english texts</h2>
+  <div class="flex gap-2">
+  @for (f of englishFrequencies; track f) {
+    <app-frequency-display [letter]="f[0]" [frequency]="f[1]"/>
+  }
+  </div>
 </main>
