@@ -4,8 +4,8 @@ import { ControlValueAccessor, FormControl, NgControl } from '@angular/forms';
 @Directive()
 export class AbstractControlComponent implements ControlValueAccessor {
   private readonly injector = inject(Injector);
-  private onChange: any;
-  private onTouched: any;
+  onChange: any;
+  onTouched: any;
 
   readonly id = input<string>();
   readonly label = input<string>();

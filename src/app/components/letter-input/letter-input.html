@@ -1,0 +1,4 @@
+<div class="flex flex-col max-w-4">
+<label [for]="id()">{{ label() }}</label>
+<input [id]="id()" [formControl]="control" maxlength="1" (input)="onChange?.(control.value)"/>
+</div>

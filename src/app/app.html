@@ -16,4 +16,12 @@
     <app-frequency-display [letter]="f[0]" [frequency]="f[1]"/>
   }
   </div>
+  <h2>Fill the inputs below to decipher the text</h2>
+  <div class="flex gap-2">
+  @for (letter of letters(); track letter) {
+    <app-letter-input [id]="letter + 'input'" [label]="letter" [ngModel]="letterMapping[letter]" (ngModelChange)="onLetterGuess(letter, $event)"/>
+  }
+  </div>
+  <h2>Deciphered text</h2>
+  {{ decipheredText() }}
 </main>
