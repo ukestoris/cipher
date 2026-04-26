@@ -1,12 +1,13 @@
 import { computed, Injectable } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormControl } from '@angular/forms';
+import { map } from 'rxjs';
 
 @Injectable({providedIn: 'root'})
 export class StatisticalAnalysisService {
   readonly cipherTextControl = new FormControl('');
 
-  readonly text = toSignal(this.cipherTextControl.valueChanges);
+  readonly text = toSignal(this.cipherTextControl.valueChanges.pipe(map(text => text?.replaceAll(/\s/g, '').toUpperCase())));
 
   readonly counts = computed(() => { 
         const text = this.text();
