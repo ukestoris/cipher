@@ -14,21 +14,32 @@ export class StatisticalAnalysisService {
         return text?.replaceAll(/\s/g, '');
     });
 
-  readonly counts = computed(() => { 
+  readonly letterCounts = this.countNGrams(1);
+
+  readonly digramCounts = this.countNGrams(2);
+
+  readonly trigramCounts = this.countNGrams(3);
+
+  readonly frequencies = computed(() => {
+    const length = this.sanitizedText()?.length ?? 0;
+    const counts = this.letterCounts();
+    if(!length) return {};
+    return Object.fromEntries(Object.entries(counts).map(([letter, count]) => [letter, count / length]));
+  })
+
+  private countNGrams(n: number) {
+    return computed(() => { 
         const text = this.sanitizedText();
         if (text) {
-            return [...text].reduce((counts, letter) => {
-                counts[letter] = (counts[letter] ?? 0) + 1;
+            return [...text].reduce((counts, letter, index) => {
+                if(text[index + n - 1] !== undefined) {
+                  const nGram = text.slice(index, index + n);
+                  counts[nGram] = (counts[nGram] ?? 0) + 1;
+                }
                 return counts;
             }, {} as Record<string, number>);
         }
         return {};
     });
-
-  readonly frequencies = computed(() => {
-    const length = this.sanitizedText()?.length ?? 0;
-    const counts = this.counts();
-    if(!length) return {};
-    return Object.fromEntries(Object.entries(counts).map(([letter, count]) => [letter, count / length]));
-  })
+  }
 }

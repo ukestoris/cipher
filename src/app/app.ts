@@ -6,6 +6,8 @@ import { englishFrequencies } from './constants/english-frequencies';
 import { StatisticalAnalysisService } from './services/statistical-analysis.service';
 import { numberDictEntryComparator } from './utils/number-dict-comparator';
 import { LetterInput } from './components/letter-input/letter-input';
+import { englishDigramsInOrder } from './constants/english-digrams';
+import { englishTrigramsInOrder } from './constants/english-trigrams';
 
 @Component({
   selector: 'app-root',
@@ -18,12 +20,16 @@ export class App {
   private readonly statAnalysis = inject(StatisticalAnalysisService);
   readonly cipherText = this.statAnalysis.cipherTextControl;
   readonly letters = computed(() => {
-    const counts = this.statAnalysis.counts(); 
+    const counts = this.statAnalysis.letterCounts(); 
     return Object.entries(counts).sort(numberDictEntryComparator).map(([letter]) => letter);
   });
-  readonly counts = this.statAnalysis.counts;
+  readonly counts = this.statAnalysis.letterCounts;
   readonly frequencies = this.statAnalysis.frequencies;
-  readonly englishFrequencies = Object.entries(englishFrequencies).sort(numberDictEntryComparator)
+  readonly englishFrequencies = Object.entries(englishFrequencies).sort(numberDictEntryComparator);
+  readonly englishDigrams = englishDigramsInOrder;
+  readonly englishTrigrams = englishTrigramsInOrder;
+  readonly digrams = computed(() => Object.entries(this.statAnalysis.digramCounts()).sort(numberDictEntryComparator));
+  readonly trigrams = computed(() => Object.entries(this.statAnalysis.trigramCounts()).sort(numberDictEntryComparator));
   readonly letterMapping: Record<string, string> = {};
   readonly decipheredText = signal<string>('');
 

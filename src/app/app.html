@@ -1,19 +1,45 @@
 <main class="main">
   <app-textarea id="cipherText" label="Cipher text" [formControl]="cipherText" />
-  <h2>Letter frequencies in cipher</h2>
-  <div class="flex gap-2">
-    @if (letters().length) {
+  <h2>Cipher satistics</h2>
+  @if (letters().length) {
+    <h3>Letters</h3>
+    <div class="flex gap-2">
       @for (letter of letters(); track letter) {
         <app-frequency-display [letter]="letter" [count]="counts()[letter]" [frequency]="frequencies()[letter]"/>
       }
-    } @else {
-      Paste the cipher text into textarea above to display letter frequencies
-    }
-  </div>
-  <h2>Letter frequencies in english texts</h2>
+    </div>
+    <h3>Digrams</h3>
+    <div class="flex gap-2">
+      @for (digram of digrams(); track digram) {
+        {{digram}} 
+      }
+    </div>
+    <h3>Trigrams</h3>
+    <div class="flex gap-2">
+      @for (trigram of trigrams(); track trigram) {
+        {{trigram}} 
+      }
+    </div>
+  } @else {
+    Paste the cipher text into textarea above to display statsics
+  }
+  <h2>English statsics</h2>
+  <h3>Letters</h3>
   <div class="flex gap-2">
   @for (f of englishFrequencies; track f) {
     <app-frequency-display [letter]="f[0]" [frequency]="f[1]"/>
+  }
+  </div>
+  <h3>Digrams</h3>
+  <div class="flex gap-2">
+  @for (f of englishDigrams; track f) {
+    {{f}} 
+  }
+  </div>
+  <h3>Trigrams</h3>
+  <div class="flex gap-2">
+  @for (f of englishTrigrams; track f) {
+    {{f}}
   }
   </div>
   <h2>Fill the inputs below to decipher the text</h2>
